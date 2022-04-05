@@ -2,13 +2,13 @@ add_action( 'init', 'dish_taxonomies' );
 
 // функция, создающая 2 новые таксономии "genres" и "writers" для постов типа "book"
 function create_book_taxonomies(){
-    
+
     // Добавляем НЕ древовидную таксономию 'writer' (как метки)
     register_taxonomy('dish', 'dish',array(
         'hierarchical'  => false,
         'labels'        => array(
-            'name'                        => _x( 'dishes', 'taxonomy general name' ),
-            'singular_name'               => _x( 'dish', 'taxonomy singular name' ),
+            'name'                        => __( 'dishes', 'taxonomy general name' ),
+            'singular_name'               => __( 'dish', 'taxonomy singular name' ),
             'search_items'                =>  __( 'Search dishes' ),
             'popular_items'               => __( 'Popular dishes' ),
             'all_items'                   => __( 'All dishes' ),
@@ -50,7 +50,7 @@ function register_post_types()
         ),
         'description' => '',
         'public' => true,
-        'publicly_queryable' => true, // зависит от public
+        'publicly_queryable' => false, // зависит от public
         'exclude_from_search' => true, // зависит от public
         'show_ui' => true, // зависит от public
         // 'show_in_nav_menus'   => null, // зависит от public
@@ -64,10 +64,19 @@ function register_post_types()
         //'capabilities'      => 'post', // массив дополнительных прав для этого типа записи
         //'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
         'hierarchical' => false,
-        'supports' => ['editor'], // 'title','editor','author','thumbnail','excerpt','trackbacks','custom-fields','comments','revisions','page-attributes','post-formats'
+        'supports' => ['title','editor','thumbnail'], // 'title','editor','author','thumbnail','excerpt','trackbacks','custom-fields','comments','revisions','page-attributes','post-formats'
         'taxonomies' => ['dish'],
         'has_archive' => false,
         'rewrite' => ['slug' => 'dish'],
         'query_var' => true,
     ));
+}
+
+add_filter( 'manage_edit-dish_columns', 'true_add_columns');
+
+function true_add_columns( $my_columns ) {
+
+    $my_columns[ 'price' ] = 'Цена';
+    return $my_columns;
+
 }
