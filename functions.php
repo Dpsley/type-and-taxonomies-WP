@@ -1,3 +1,4 @@
+<?
 add_action( 'init', 'dish_taxonomies' );
 
 // функция, создающая 2 новые таксономии "genres" и "writers" для постов типа "book"
@@ -80,3 +81,4 @@ function true_add_columns( $my_columns ) {
     return $my_columns;
 
 }
+?>
